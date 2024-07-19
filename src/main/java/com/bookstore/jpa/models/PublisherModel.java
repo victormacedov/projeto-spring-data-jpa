@@ -1,5 +1,8 @@
 package com.bookstore.jpa.models;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,12 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import java.io.Serializable;
-import java.util.UUID;
-
 @Entity
-@Table(name = "TB_BOOK")
-public class BookModel implements Serializable {
+@Table(name = "TB_PUBLISHER")
+public class PublisherModel implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -20,7 +20,7 @@ public class BookModel implements Serializable {
     private UUID id;
 
     @Column(nullable = false, unique = true)
-    private String title;
+    private String name;
 
     public UUID getId() {
         return id;
@@ -30,11 +30,11 @@ public class BookModel implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 }
