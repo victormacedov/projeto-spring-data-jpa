@@ -1,11 +1,6 @@
 package com.bookstore.jpa.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -22,6 +17,11 @@ public class BookModel implements Serializable {
     @Column(nullable = false, unique = true)
     private String title;
 
+    //JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne//(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publisher_id")
+    private PublisherModel publisher;
+
     public UUID getId() {
         return id;
     }
@@ -37,4 +37,8 @@ public class BookModel implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public PublisherModel getPublisher() {return publisher;}
+
+    public void setPublisher(PublisherModel publisher) {this.publisher = publisher;}
 }
