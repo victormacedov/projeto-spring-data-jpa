@@ -1,9 +1,7 @@
 package com.bookstore.jpa.models;
 
-import java.awt.print.Book;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -11,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "TB_AUTHOR")
+@Table(name = "TB_AUTHOR") 
 public class AuthorModel implements Serializable{
     private static final long serialVersionUID = 1L;
     
