@@ -1,4 +1,4 @@
-## Spring Data JPA
+# Spring Data JPA
 
 É mais um projeto do ecossistema Spring utilizado para trabalhar com
 base de dados em nossas aplicações Spring de forma mais simples.
@@ -25,7 +25,7 @@ especificação JPA. Usando assim o JDBC por de baixo dos panos para fazer
 todas as transições de uma base de dados, para que seja possível iniciar
 as conexões, executas todas as transações/query's.
 
-### JPA Notations
+## JPA Notations
 
 Auxilia todo o mapeamento do objeto-relacional para a base de dados.
 
@@ -70,7 +70,7 @@ entidades. O lado \"muitos\" é a entidade relacionada.
 entidades. Cada entidade pode estar relacionada a no máximo uma
 instância da outra entidade.
 
-### Projeto que vamos implementar o Spring Data JPA.
+## Projeto que vamos implementar o Spring Data JPA.
 
 ![](media/image1.png){width="5.646621828521435in"
 height="3.594251968503937in"}
@@ -111,7 +111,7 @@ console.
 \- Vermos todo o SQL que está sendo gerado no nosso console todas as
 vezes que ele for criado, modificado e etc.
 
-### Mapeando as entidades JPA
+## Mapeando as entidades JPA
 
 Dentro do pacote principal (com.bookstore.jpa), nós criamos um outro
 pacote chamado "models" onde vamos inserir nossos models que vamos
@@ -136,9 +136,9 @@ o tipo do valor vai ser gerado de forma automática.
 atributo vai ser uma coluna com suas determinadas regras: não pode estar
 vazio e que tem que ser único.
 
-### Implementação dos relacionamentos:
+## Implementação dos relacionamentos:
 
-### OneToMany e ManyToOne:
+## OneToMany e ManyToOne:
 
 Vamos seguir as seguintes lógicas:
 
@@ -146,7 +146,7 @@ Um livro ele pertence a somente uma editora/Publisher, já uma
 editora/publicher pode ter mais de um livro, logo a relação da editora
 com os livros é OneToMany e dos livros com a editora é ManyToOne.
 
-#### Configurando o BookModel:
+### Configurando o BookModel:
 
 **Vai ter somente uma editora/publisher.**
 ~~~java
@@ -174,7 +174,7 @@ de PublisherModel. Ela vai ser tipo o One do OneToMany.
 
 \- Geramos os Getters e Setters.
 
-#### Configurando o PublisherModel:
+### Configurando o PublisherModel:
 
 **Vai ter uma coleção de livros.**
 ~~~java
@@ -217,14 +217,14 @@ serialização de objetos Java para JSON.
 
 \- Geramos os Getters e Setters.
 
-### ManyToMany:
+## ManyToMany:
 
 Vamos seguir a seguinte lógica:
 
 Um Autor pode ter escrito vários livros e um livro pode ter mais de um
 autor, logo, o relacionamento vai ser muitos-para-muitos.
 
-#### Configurando o BookModel:
+### Configurando o BookModel:
 ~~~java
 @ManyToMany
 @JoinTable(
@@ -234,7 +234,7 @@ autor, logo, o relacionamento vai ser muitos-para-muitos.
 private Set<AuthorModel> authors = new HashSet<>();
 ~~~
 
-##### Como que esse relacionamento é feito?
+### Como que esse relacionamento é feito?
 
 \- Definimos uma tabela auxiliar, pois já que temos uma coleção em ambos
 os lados, a gente não vai conseguir criar uma coluna com uma chave
@@ -255,7 +255,7 @@ de AuthorModel.
 
 \- Implementamos o Getter e o Setter que faltam.
 
-#### Configurando o AuthorModel:
+### Configurando o AuthorModel:
 ~~~java
 @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
@@ -270,13 +270,13 @@ entidade BookModel e deixamos o fetchTime como Lazy, para que sempre que
 a gente for buscar esses autores ele vai retornar somente a coleção de
 livros desse autor.
 
-### OneToOne:
+## OneToOne:
 
 Vamos seguir a seguinte lógica:\
 Cada livro vai ter uma resenha/resumo e um resumo vai pertencer a
 somente um livro.
 
-#### Configurando o BookModel:
+### Configurando o BookModel:
 ~~~java
 @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
 private ReviewModel review;
@@ -297,7 +297,7 @@ temos um controle e um cuidado muito maior.
 Quando for fazer um busca na base de dados um livro/BookModel, ele vem
 como padrão o fetchtime EAGER.
 
-#### Configurando o ReviewModel:
+### Configurando o ReviewModel:
 ~~~java
 @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 @OneToOne
@@ -310,7 +310,7 @@ livro que está sendo comentado.
 
 \- Implementamos os Getters e Setters.
 
-#### Implementação dos Repositories:
+### Implementação dos Repositories:
 
 Criamos o package Repositories e cada repository, que é uma interface,
 de cada entidade.
@@ -364,7 +364,7 @@ testar tudo isso.
 Para isso nós vamos criar 3 partes/packages: Record (DTO), Service e
 Controller.
 
-### DTOs
+## DTOs
 
 \- Criamos o nosso DTO para dizermos o que queremos que seja passado no
 JSON e que futuramente irá virar um objeto Java.
@@ -376,7 +376,7 @@ public record BookRecordDto(String title,
 }
 ~~~
 
-### Services
+## Services
 
 \- Vai ser aonde a gente vai implementar o método para salvar os livros,
 delete e encontrar a listagem deles.
@@ -399,7 +399,7 @@ public BookService(BookRepository bookRepository, AuthorRepository authorReposit
 
 Logo após isso, vamos criar os métodos citados acima.
 
-#### Método saveBook:
+### Método saveBook:
 
 \- Ele vai receber o bookRecordDto (que é justamente o JSON que vamos
 enviar) e ele vai retornar um BookModel para o cliente pra ver que foi
@@ -451,7 +451,7 @@ cascadeType.ALL, na base de dados.
 Ele também vai relacionar o livro ao publisher e aos autores que
 escreveram esse livro.
 
-#### Notation \@Transactional:
+### Notation \@Transactional:
 
 Ele garante um call-back/rollback para todas as transações que são
 feitas para a base de dados caso haja algum problema ou interrupção.
@@ -493,7 +493,7 @@ insert into tb_publisher values(gen_random_uuid(), 'Alfa Books');
 insert into tb_publisher values(gen_random_uuid(), 'Person');
 ~~~
 
-#### Método getAllBooks:
+### Método getAllBooks:
 
 É um método simples que utilizamos o método findAll() no bookRepository
 para listar todos os livros.
@@ -517,7 +517,7 @@ eles acabam sendo minimizados, ou seja, acaba só aparecendo o ID do
 livro, o título do livro e o review, com seu ID e o conteúdo do
 comentário (que por default ele já tem o carregamento EAGER/ansioso).
 
-#### Método deleteBook (considerando o cascadeType como ALL):
+### Método deleteBook (considerando o cascadeType como ALL):
 ~~~java
 @Transactional
 public void deleteBook(UUID id){
