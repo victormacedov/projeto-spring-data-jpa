@@ -72,8 +72,7 @@ instância da outra entidade.
 
 ## Projeto que vamos implementar o Spring Data JPA.
 
-![](media/image1.png){width="5.646621828521435in"
-height="3.594251968503937in"}
+![](entities.png)
 
 **Conexão com o banco de dados:**
 
